@@ -1,0 +1,83 @@
+#login {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translateX(-50%);
+  width: 50vh;
+  background: #292933;
+  border-radius: 0.3vh;
+  overflow: hidden;
+}
+#login > #topbar {
+  height: 3vh;
+  background: #36aaf9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.6vh;
+  font-weight: bold;
+  margin-bottom: 2vh;
+}
+#login > .input-field {
+  height: 4vh;
+  display: flex;
+  align-items: center;
+  padding-left: 2vh;
+  margin-bottom: 2vh;
+}
+#login > .input-field > input {
+  position: relative;
+  height: 2.5vh;
+  width: 60%;
+  outline: none;
+  border: none;
+  background: none;
+  color: #6C6C80;
+  transition: all .3s ease-in-out;
+  border-bottom: 0.2vh solid #3D3D4C;
+  font-size: 1.2vh;
+  padding: 1vh 0;
+}
+#login > .input-field > label {
+  position: absolute;
+  color: #6C6C80;
+  transition: all .3s ease-in-out;
+  pointer-events: none;
+  font-size: 1.5vh;
+  transform: translateY(-30%);
+}
+#login > .input-field > input:focus + label,
+#login > .input-field > input:valid + label {
+  transform: translateY(-150%);
+}
+#login > .input-field > input:focus + label {
+  color: #36aaf9;
+}
+#login > .input-field > input:focus {
+  color: #DDDDE9;
+  border-bottom: 0.2vh solid #36aaf9;
+} 
+#login > .input-submit {
+  height: 4vh;
+  display: flex;
+  align-items: center;
+  padding-left: 2vh;
+  margin-bottom: 1vh;
+}
+#login > .input-submit > input[type="button"] {
+  width: max-content;
+  border: none;
+  background: #3D3D4C;
+  color: white;
+  padding: 0.5vh 1vh;
+  border-radius: 0.3vh;
+  cursor: pointer;
+  position: relative;
+  transition: all .3s ease-in-out;
+  margin-right: 1vh;
+  font-size: 1.3vh;
+}
+#login > .input-submit > input[type="button"]:hover {
+  background: #36aaf9;
+}

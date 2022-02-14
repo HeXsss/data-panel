@@ -1,0 +1,37 @@
+/* 
+#1F1F26 - #1 standardowy szary z nutą blurple
+#292933 - #2 ten co wyżej tylko jaśniejszy
+#3D3D4C - #3 co wyżej
+#6C6C80 - #4 kolejny odcień
+#DDDDE9 - #5 a ten bardzo jasny
+
+---
+
+#36aaf9 - niebieski
+#c702ac - ciemniejszy róż
+#00dbde - turkusowy
+#fc00ff - jebitny róż
+#a0a0ff - blurple hexa
+#ffbd1b - złoty
+#313131 - ciemy szary
+#464646 - średnio ciemny szary
+#cfcfcf - jasny szary
+
+#4a8431 - zielony keypad, minigierka
+#0a3e11 - ciemny zielony keypad, minigierka 
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background: #1F1F26;
+}
