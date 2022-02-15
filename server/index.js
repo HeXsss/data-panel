@@ -55,12 +55,12 @@ app.post('/api/v1/token', (req, res) => {
   })
 })
 // app.get("/api/v1/cookie", (req, res) => {
-//   console.log(req.cookies['vlife-panel:token'])
+//   console.log(req.cookies['data-panel:token'])
 //   res.send()
 // });
 app.get('/api/v1/getSession', (req, res, next) => {
-  if (req.cookies['vlife-panel:token']) { 
-    res.send(req.cookies['vlife-panel:token'])
+  if (req.cookies['data-panel:token']) { 
+    res.send(req.cookies['data-panel:token'])
   } else {
     res.send(null)
   }
@@ -83,7 +83,7 @@ app.post('/api/v1/login', (req, res, next) => {
       refreshTokens.push(refreshToken)
       const cookieData = JSON.stringify({ accessToken, refreshToken })
       console.log(cookieData)
-      res.cookie("vlife-panel:token", cookieData, {
+      res.cookie("data-panel:token", cookieData, {
         secure: false,
         // expires: new Date(new Date().getTime() + 30 * 1000),
         httpOnly: true,
