@@ -54,17 +54,17 @@ app.post('/api/v1/token', (req, res) => {
     res.json({ accessToken: accessToken })
   })
 })
-app.get("/api/v1/cookie", (req, res) => {
-  const dataToSecure = {
-    dataToSecure: "This is the secret data in the cookie.",
-  };
-  res.cookie("secureCookie", JSON.stringify(dataToSecure), {
-    secure: process.env.NODE_ENV !== "development",
-    httpOnly: true,
-    expires: new Date(Date.now() + 900000),
-  });
-  res.send("Hello.");
-});
+// app.get("/api/v1/cookie", (req, res) => {
+//   console.log(req.cookies['vlife-panel:token'])
+//   res.send()
+// });
+app.get('/api/v1/getSession', (req, res, next) => {
+  if (req.cookies['vlife-panel:token']) { 
+    res.send(req.cookies['vlife-panel:token'])
+  } else {
+    res.send(null)
+  }
+})
 app.post('/api/v1/login', (req, res, next) => {
   const username = req.body.username || ''
   const password = req.body.password || ''
@@ -85,10 +85,13 @@ app.post('/api/v1/login', (req, res, next) => {
       console.log(cookieData)
       res.cookie("vlife-panel:token", cookieData, {
         secure: false,
-        expires: new Date(new Date().getTime() + 30 * 1000),
+        // expires: new Date(new Date().getTime() + 30 * 1000),
         httpOnly: true,
       })
-      res.send({state: 'finished'})
+      res.send({
+        accessToken,
+        refreshToken
+      })
     } else {
       res.sendStatus(401)
     }

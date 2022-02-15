@@ -44,7 +44,9 @@ export default class Login extends Component {
     })
   }
   async handleCookie() {
-    const response = await fetch('http://localhost:4001/api/v1/cookie')
+    const response = await fetch('http://localhost:4001/api/v1/cookie', {
+      credentials: 'include',
+    })
   }
   render() {
     return (

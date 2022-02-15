@@ -3,17 +3,33 @@ import Login from '../Login/Login';
 import { CSSTransition } from 'react-transition-group';
 import Loading from '../Loading/Loading';
 import './App.css';
-let Session = {
-  accessToken: null,
-  refreshToken: null
-}
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
+      isLoading: false,
+      session: null,
     }
     this.handleLogin = this.handleLogin.bind(this)
+    this.handleLoginError = this.handleLoginError.bind(this)
+  }
+  async componentDidMount() {
+    try {
+      const response = await fetch('http://localhost:4001/api/v1/getSession', {
+        credentials: 'include',
+      })
+      const data = await response.json()  
+      this.setState({ session: data})
+    } catch (error) {
+      this.setState({ session: {
+        accessToken: null,
+        refreshToken: null
+      }})
+      return
+    }
+  }
+  handleLoginError(message) {
+
   }
   async handleLogin({ login, password }) {
     this.setState({ isLoading: true })
@@ -30,13 +46,22 @@ export default class App extends Component {
           password
         })
       })
-      const data = await response.json()
+      if (response.status === 200) {
+        const data = await response.json()
+        this.setState({ session: data})
+      }
       this.setState({isLoading: false})  
     } catch (e) {
-      throw new Error(e.message)
+      this.handleLoginError()
     }
   }
   render() {
+    let hasToLogin = true
+    if (this.state.session === null) {
+      hasToLogin = false
+    } else if (this.state.session.accessToken !== null) {
+      hasToLogin = false
+    }
     return (
       <>
         <CSSTransition
@@ -47,7 +72,7 @@ export default class App extends Component {
         >  
           <Loading/>
         </CSSTransition>
-        {Session.accessToken === null ? <Login onLogin={this.handleLogin}/>: <></>}
+        {hasToLogin ? <Login onLogin={this.handleLogin}/>: <></>}
       </>
     )
   }
