@@ -3,19 +3,10 @@ import Login from '../Login/Login';
 import { CSSTransition } from 'react-transition-group';
 import Loading from '../Loading/Loading';
 import './App.css';
-import Cookies from 'universal-cookie';
-const cookies = new Cookies();
-
-const createCookie = (key, value) => {
-  cookies.set(key, value, { sameSite: 'strict', path: '/', expires: new Date(new Date().getTime() + 30 * 1000), httpOnly: true})
-  console.log(cookies.get(key))
-}
-
 let Session = {
   accessToken: null,
   refreshToken: null
 }
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +20,7 @@ export default class App extends Component {
     try {
       const response = await fetch('http://localhost:4001/api/v1/login', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -39,7 +31,6 @@ export default class App extends Component {
         })
       })
       const data = await response.json()
-      createCookie('session', data)
       this.setState({isLoading: false})  
     } catch (e) {
       throw new Error(e.message)

@@ -12,6 +12,7 @@ export default class Login extends Component {
     }
     this.handleInput = this.handleInput.bind(this)
     this.handleLogin = this.handleLogin.bind(this)
+    this.handleCookie = this.handleCookie.bind(this)
   }
   handleInput(field, { target }) {
     this.setState((prev) => {
@@ -42,6 +43,9 @@ export default class Login extends Component {
       password
     })
   }
+  async handleCookie() {
+    const response = await fetch('http://localhost:4001/api/v1/cookie')
+  }
   render() {
     return (
       <div id="login">
@@ -58,6 +62,7 @@ export default class Login extends Component {
         })}
         <div className="input-submit">
           <input type="button" value="Zaloguj" onClick={this.handleLogin}/>
+          <input type="button" value="Cookie" onClick={this.handleCookie}/>
         </div>
       </div>
     )

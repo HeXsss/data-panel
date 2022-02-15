@@ -8,7 +8,10 @@ require('dotenv').config()
 const cors = require("cors");
 app.use(express.json())
 const port = process.env.PORT || 3000;
-app.use(cors({credentials: true, origin: `http://localhost:3000`}));
+app.use(cors({
+  credentials: true,
+  origin: `http://localhost:3000`
+}));
 app.use(bodyParser.json());
 const jwt = require('jsonwebtoken')
 const mysql = require('mysql');
@@ -51,9 +54,18 @@ app.post('/api/v1/token', (req, res) => {
     res.json({ accessToken: accessToken })
   })
 })
+app.get("/api/v1/cookie", (req, res) => {
+  const dataToSecure = {
+    dataToSecure: "This is the secret data in the cookie.",
+  };
+  res.cookie("secureCookie", JSON.stringify(dataToSecure), {
+    secure: process.env.NODE_ENV !== "development",
+    httpOnly: true,
+    expires: new Date(Date.now() + 900000),
+  });
+  res.send("Hello.");
+});
 app.post('/api/v1/login', (req, res, next) => {
-  console.log(req.cookies)
-  console.log(req.signedCookies)
   const username = req.body.username || ''
   const password = req.body.password || ''
   console.log(username, password)
@@ -69,8 +81,14 @@ app.post('/api/v1/login', (req, res, next) => {
       const accessToken = generateAccessToken(userData)
       const refreshToken = jwt.sign(userData, process.env.REFRESH_TOKEN)
       refreshTokens.push(refreshToken)
-      // res.json({ accessToken, refreshToken })
-      res.cookie("session", { accessToken, refreshToken }, { sameSite: 'strict', path: '/', expires: new Date(new Date().getTime() + 30 * 1000), httpOnly: true})
+      const cookieData = JSON.stringify({ accessToken, refreshToken })
+      console.log(cookieData)
+      res.cookie("vlife-panel:token", cookieData, {
+        secure: false,
+        expires: new Date(new Date().getTime() + 30 * 1000),
+        httpOnly: true,
+      })
+      res.send({state: 'finished'})
     } else {
       res.sendStatus(401)
     }
