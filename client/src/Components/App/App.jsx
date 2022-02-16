@@ -4,19 +4,19 @@ import { CSSTransition } from 'react-transition-group';
 import {
   Routes,
   Route,
-  Link,
   useNavigate,
   useLocation,
   Navigate,
   Outlet
 } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import Loading from '../Loading/Loading';
+import Error from '../Error/Error';
 import './App.css';
 
 const App = (props) => {
   const [isLoading, updateLoading] = useState(false);
   const [session, updateSession] = useState(null);
+  const navigate = useNavigate();
   useEffect(async () => {
     try {
       const response = await fetch('http://localhost:4001/api/v1/getSession', {
@@ -75,7 +75,8 @@ const App = (props) => {
         <Loading/>
       </CSSTransition>
       <Routes>
-        <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
+        <Route exact index path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route path='*' exact={true} element={<Error code={404} msg={"Nie znaleziono strony"}/>} />
       </Routes>
     </>
   )
