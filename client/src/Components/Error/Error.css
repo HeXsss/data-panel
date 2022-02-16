@@ -1,0 +1,15 @@
+#Error {
+  position: fixed;
+  left: 50%; top: 20%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+  user-select: none;
+}
+#Error > #Error-code {
+  font-size: 5vh;
+}
+#Error > #Error-msg {
+  font-size: 2vh;
+  margin-top: 1vh;
+}
