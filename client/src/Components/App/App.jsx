@@ -1,38 +1,41 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import Login from '../Login/Login';
 import { CSSTransition } from 'react-transition-group';
+import {
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+  useLocation,
+  Navigate,
+  Outlet
+} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 import './App.css';
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      session: null,
-    }
-    this.handleLogin = this.handleLogin.bind(this)
-    this.handleLoginError = this.handleLoginError.bind(this)
-  }
-  async componentDidMount() {
+
+const App = (props) => {
+  const [isLoading, updateLoading] = useState(false);
+  const [session, updateSession] = useState(null);
+  useEffect(async () => {
     try {
       const response = await fetch('http://localhost:4001/api/v1/getSession', {
         credentials: 'include',
       })
       const data = await response.json()  
-      this.setState({ session: data})
+      updateSession(data)
     } catch (error) {
-      this.setState({ session: {
+      updateSession({
         accessToken: null,
         refreshToken: null
-      }})
-      return
+      })
     }
-  }
-  handleLoginError(message) {
+  });
+  const handleLoginError = () => {
 
   }
-  async handleLogin({ login, password }) {
-    this.setState({ isLoading: true })
+  const handleLogin = async ({ login, password }) => {
+    updateLoading(true)
     try {
       const response = await fetch('http://localhost:4001/api/v1/login', {
         method: 'POST',
@@ -48,32 +51,33 @@ export default class App extends Component {
       })
       if (response.status === 200) {
         const data = await response.json()
-        this.setState({ session: data})
+        updateSession(data)
       }
-      this.setState({isLoading: false})  
+      updateLoading(false)
     } catch (e) {
-      this.handleLoginError()
+      handleLoginError()
     }
   }
-  render() {
-    let hasToLogin = true
-    if (this.state.session === null) {
-      hasToLogin = false
-    } else if (this.state.session.accessToken !== null) {
-      hasToLogin = false
-    }
-    return (
-      <>
-        <CSSTransition
-          in={this.state.isLoading}
-          unmountOnExit
-          timeout={500}
-          classNames="load"
-        >  
-          <Loading/>
-        </CSSTransition>
-        {hasToLogin ? <Login onLogin={this.handleLogin}/>: <></>}
-      </>
-    )
+  let hasToLogin = true
+  if (session === null) {
+    hasToLogin = false
+  } else if (session.accessToken !== null) {
+    hasToLogin = false
   }
+  return (
+    <>    
+      <CSSTransition
+        in={isLoading}
+        unmountOnExit
+        timeout={500}
+        classNames="load"
+      >  
+        <Loading/>
+      </CSSTransition>
+      <Routes>
+        <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
+      </Routes>
+    </>
+  )
 }
+export default App;
