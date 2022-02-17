@@ -35,3 +35,14 @@ body {
   height: 100vh;
   background: #1F1F26;
 }
+
+::-webkit-scrollbar {
+  width: 0.7vh;
+  position: absolute;
+ }
+::-webkit-scrollbar-track {
+  background-color: rgba(221,221,233,0.3);
+ }
+::-webkit-scrollbar-thumb {
+  background-color: rgba(221,221,233,0.7);
+}

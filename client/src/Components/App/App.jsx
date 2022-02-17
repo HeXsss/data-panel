@@ -75,7 +75,7 @@ const App = (props) => {
       handleLoginError()
     }
   }
-  
+  const getSession = () => (session)
   return (
     <>    
       <CSSTransition
@@ -88,7 +88,7 @@ const App = (props) => {
       </CSSTransition>
       <Routes>
         <Route exact index path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/dashboard" element={<Dashboard getSession={getSession}/>}/>
         <Route path='*' exact={true} element={<Error code={404} msg={"Nie znaleziono strony"}/>} />
       </Routes>
     </>
