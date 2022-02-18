@@ -22,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Reroute to server directory
-      run: pub get
+      run: cd server
       working-directory: server
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
