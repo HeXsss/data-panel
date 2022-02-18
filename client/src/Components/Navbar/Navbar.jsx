@@ -6,7 +6,7 @@ const Navbar = (props) => {
       <div id="options">
         {props.options.map((e, id) => {
           return (
-            <div className="option" key={`option_${id}`} onClick={e.onClick}>
+            <div className={props.activeOption === e.name ? "active option":"option"} key={`option_${id}`} onClick={e.onClick}>
               <div className="icon"><e.icon/></div>
               <div className="label">{e.label}</div>
             </div>

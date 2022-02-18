@@ -4,10 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 import {
   Routes,
   Route,
-  useNavigate,
-  useLocation,
-  Navigate,
-  Outlet
+  useNavigate
 } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 import Error from '../Error/Error';
@@ -36,7 +33,7 @@ const App = (props) => {
     if (session) {
       const path = window.location.pathname
       if (session.accessToken) {
-        if (path === '/login') navigate("/dashboard")
+        if (path === '/login') navigate("/dashboard/home")
       } else {
         if (path !== '/login') navigate("/login")
       }
@@ -88,7 +85,7 @@ const App = (props) => {
       </CSSTransition>
       <Routes>
         <Route exact index path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/dashboard" element={<Dashboard getSession={getSession}/>}/>
+        <Route path="/dashboard/:page" element={<Dashboard getSession={getSession}/>}/>
         <Route path='*' exact={true} element={<Error code={404} msg={"Nie znaleziono strony"}/>} />
       </Routes>
     </>

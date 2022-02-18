@@ -1,15 +1,54 @@
 import "./Dashboard.css";
 import Navbar from '../Navbar/Navbar';
 import { useEffect } from 'react';
-import { BsFillHouseDoorFill } from 'react-icons/bs';
+import {
+  BsFillHouseDoorFill,
+  BsFillBarChartLineFill,
+  BsFillCalendar2CheckFill,
+  BsFillHddFill
+} from 'react-icons/bs';
+import {
+  useParams,
+  useNavigate
+} from 'react-router-dom';
 
 const Dashboard = (props) => {
   let session = {}
+  const { page } = useParams();
+  const navigate = useNavigate();
+  // TODO: ADD EACH OF PAGES
   const navbarOptions = [
     {
       icon: BsFillHouseDoorFill,
       label: "Strona główna",
-      onClick: () => {}
+      name: 'home',
+      onClick: () => {
+        navigate("/dashboard/home")
+      }
+    },
+    {
+      icon: BsFillBarChartLineFill,
+      label: "Statystyki",
+      name: 'stats',
+      onClick: () => {
+        navigate("/dashboard/stats")
+      }
+    },
+    {
+      icon: BsFillCalendar2CheckFill,
+      label: "Kalendarz",
+      name: "calendar",
+      onClick: () => {
+        navigate("/dashboard/calendar")
+      }
+    },
+    {
+      icon: BsFillHddFill,
+      label: "Baza danych",
+      name: "database",
+      onClick: () => {
+        navigate("/dashboard/database")
+      }
     }
   ]
   useEffect(() => {
@@ -18,7 +57,7 @@ const Dashboard = (props) => {
   return (
     <>
     {session !== null ? <div id="dashboard">
-      <Navbar options={navbarOptions}/>
+      <Navbar options={navbarOptions} activeOption={page}/>
     </div>: ''}
     </>
   )

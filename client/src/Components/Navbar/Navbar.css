@@ -26,8 +26,10 @@
   transition: all .3s ease-in-out;
   cursor: pointer;
   color: #6C6C80;
+  margin: 0 1vh;
 }
 #navbar > #options > .option > .icon {
+  font-size: 1.7vh;
 }
 #navbar > #options > .option > .label {
   position: absolute;
@@ -46,9 +48,14 @@
 }
 #navbar > #options > .option:hover > .label {
   opacity: 1;
-  transform: translate(-50%, 50%);
+  transform: translate(-50%, 70%);
 }
 #navbar > #options > .option:hover {
   background: #36aaf9;
+  color: white;
+  transform: scale(0.9);
+}
+#navbar > #options > .option.active {
+  background: #c702ac;
   color: white;
 }
