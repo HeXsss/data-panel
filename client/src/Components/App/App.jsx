@@ -4,8 +4,12 @@ import { CSSTransition } from 'react-transition-group';
 import {
   Routes,
   Route,
-  useNavigate
+  useNavigate,
+  Navigate
 } from 'react-router-dom';
+import {
+  Redirect
+} from 'react-router';
 import Loading from '../Loading/Loading';
 import Error from '../Error/Error';
 import Dashboard from '../Dashboard/Dashboard';
@@ -29,22 +33,9 @@ const App = (props) => {
       })
     }
   }
-  const loadSessionRoute = async () => {
-    if (session) {
-      const path = window.location.pathname
-      if (session.accessToken) {
-        if (path === '/login') navigate("/dashboard/home")
-      } else {
-        if (path !== '/login') navigate("/login")
-      }
-    }
-  }
   useEffect(() => {
     fetchTokens()
   }, []);
-  useEffect(() => {
-    loadSessionRoute()
-  }, [session])
   const handleLoginError = (msg) => {
     console.log(msg)
   }
@@ -84,9 +75,19 @@ const App = (props) => {
         <Loading/>
       </CSSTransition>
       <Routes>
-        <Route exact index path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/dashboard/:page" element={<Dashboard getSession={getSession}/>}/>
-        <Route path='*' exact={true} element={<Error code={404} msg={"Nie znaleziono strony"}/>} />
+        <Route path="/login" element={
+          session ? (
+            session.accessToken !== null ? <Navigate to="/dashboard/home" /> : <Login onLogin={handleLogin} />
+          ) : (<Login onLogin={handleLogin} />)
+        } />
+        <Route path="/dashboard/:page" element={
+          session ? (
+            session.accessToken === null ? <Navigate to="/login" /> :  <Dashboard getSession={getSession} />
+          ) : ( <Dashboard getSession={getSession} />)
+        }/>
+        <Route path="*" element={
+          <Navigate to="/login" />
+        }/>
       </Routes>
     </>
   )

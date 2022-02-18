@@ -52,6 +52,16 @@ const Dashboard = (props) => {
     }
   ]
   useEffect(() => {
+    let isValid = false
+    navbarOptions.forEach(e => {
+      if (e.name === page) isValid = true
+    })
+    if (!isValid) {
+      console.log('INVALID LINK')
+      navigate('/dashboard/home')
+    }
+  }, [])
+  useEffect(() => {
     session = props.getSession()
   }, [props.getSession()])
   return (
