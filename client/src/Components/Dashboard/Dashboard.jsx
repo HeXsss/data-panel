@@ -8,9 +8,16 @@ import {
   BsFillHddFill
 } from 'react-icons/bs';
 import {
+  Routes,
+  Route,
+  Navigate,
   useParams,
   useNavigate
 } from 'react-router-dom';
+import Home from '../Home/Home';
+import Stats from '../Stats/Stats';
+import Calendar from '../Calendar/Calendar';
+import Database from "../Database/Database";
 
 const Dashboard = (props) => {
   let session = {}
@@ -22,6 +29,7 @@ const Dashboard = (props) => {
       icon: BsFillHouseDoorFill,
       label: "Strona główna",
       name: 'home',
+      elem: Home,
       onClick: () => {
         navigate("/dashboard/home")
       }
@@ -30,6 +38,7 @@ const Dashboard = (props) => {
       icon: BsFillBarChartLineFill,
       label: "Statystyki",
       name: 'stats',
+      elem: Stats,
       onClick: () => {
         navigate("/dashboard/stats")
       }
@@ -38,6 +47,7 @@ const Dashboard = (props) => {
       icon: BsFillCalendar2CheckFill,
       label: "Kalendarz",
       name: "calendar",
+      elem: Calendar,
       onClick: () => {
         navigate("/dashboard/calendar")
       }
@@ -46,6 +56,7 @@ const Dashboard = (props) => {
       icon: BsFillHddFill,
       label: "Baza danych",
       name: "database",
+      elem: Database,
       onClick: () => {
         navigate("/dashboard/database")
       }
@@ -66,9 +77,12 @@ const Dashboard = (props) => {
   }, [props.getSession()])
   return (
     <>
-    {session !== null ? <div id="dashboard">
-      <Navbar options={navbarOptions} activeOption={page}/>
-    </div>: ''}
+      {session !== null ? <div id="dashboard">
+        <Navbar options={navbarOptions} activeOption={page}/>
+        {navbarOptions.map(option => {
+          return (session !== null && page === option.name) ? <option.elem key={`option-${option.name}`}/> : ''
+        })}
+      </div> : ''}
     </>
   )
 }

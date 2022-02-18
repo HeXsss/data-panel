@@ -7,9 +7,6 @@ import {
   useNavigate,
   Navigate
 } from 'react-router-dom';
-import {
-  Redirect
-} from 'react-router';
 import Loading from '../Loading/Loading';
 import Error from '../Error/Error';
 import Dashboard from '../Dashboard/Dashboard';
@@ -80,7 +77,7 @@ const App = (props) => {
             session.accessToken !== null ? <Navigate to="/dashboard/home" /> : <Login onLogin={handleLogin} />
           ) : (<Login onLogin={handleLogin} />)
         } />
-        <Route path="/dashboard/:page" element={
+        <Route path="/dashboard/:page/*" element={
           session ? (
             session.accessToken === null ? <Navigate to="/login" /> :  <Dashboard getSession={getSession} />
           ) : ( <Dashboard getSession={getSession} />)
