@@ -1,0 +1,38 @@
+#home {
+  width: 100%;
+}
+#home > .content-box {
+  padding: 1vh;
+  background: #292933;
+  width: max-content;
+  border-radius: 0.3vh;
+  font-size: 1.5vh;
+  color: rgba(221,221,233,0.6);
+  max-width: 50vh;
+  border: 0.2vh solid #3D3D4C;
+  text-align: justify;
+  cursor: pointer;
+  margin: 2vh auto;
+}
+#home > .content-box > .bold {
+  font-weight: bold;
+}
+#home > .content-box > .title {
+  display: block;
+  padding: 0 1vh 0.5vh 1vh;
+  border-bottom: 0.2vh solid #DDDDE9;
+  margin-bottom: 1vh;
+  font-size: 1.8vh;
+  color: #DDDDE9;
+  transition: all .3s ease-in-out;
+}
+#home > .content-box > ul {
+  margin: 1vh 0 1vh 1.5vh;
+}
+#home > .content-box > ul > li {
+  margin-bottom: 0.5vh;
+}
+#home > .content-box:hover > .title {
+  border-bottom: 0.2vh solid #36aaf9;
+  color: #36aaf9;
+}
